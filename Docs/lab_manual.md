@@ -9,21 +9,21 @@ Login to your VM with the following credentials...
 # Table of Contents
 
 1. [Part 0 - Log into Azure and Explore Azure Resources](#part-0---log-into-azure-and-explore-azure-resources)
-2. [Part 1 - Setup your Azure PostrgreSQL Database for your Agentic App](#part-1---setup-your-azure-postrgresql-database-for-your-agentic-app)  
+2. [Part 1 - Setup your Azure PostgreSQL Database for your Agentic App](#part-1---setup-your-azure-postgresql-database-for-your-agentic-app)
     1. [Open VS Code and Setup Database Connection to Azure PostgreSQL](#open-vs-code-and-setup-database-connection-to-azure-postgresql)  
     2. [Use Connection Dialog to Setup Database Connection](#use-connection-dialog-to-setup-database-connection)  
     3. [Launch PSQL Command Line Shell in VS Code](#launch-psql-command-line-shell-in-vs-code)  
     4. [Populate the Database with Sample Data](#populate-the-database-with-sample-data)  
     5. [Install and configure the `azure_ai` extension](#install-and-configure-the-azure_ai-extension)  
-    6. [Explore the Azure AI schema and Setup `azure_ai` Extension](#explore-the-azure-ai-schema-and-setup-azure_ai-extension)  
-    7. [Review the Azure OpenAI schema](#review-the-azure-openai-schema)  
+    6. [Explore the Azure AI schema and Setup `azure_ai` extension](#explore-the-azure-ai-schema-and-setup-azure_ai-extension)
+    7. [Review the Azure OpenAI schema](#review-the-azure-openai-schema)
 3. [Part 2 - Using AI-driven features in Postgres](#part-2---using-ai-driven-features-in-postgres)  
-    1. [Open New Query Editor in VS Code PostgreSQL Extension](#open-new-query-editor-in-vs-code-postgresql-extension)  
+    1. [Open New Query Editor in VS Code PostgreSQL extension](#open-new-query-editor-in-vs-code-postgresql-extension)
     2. [Using Pattern matching for queries](#using-pattern-matching-for-queries)  
     3. [Using Semantic Vector Search and DiskANN Index](#using-semantic-vector-search-and-diskann-index)  
         - [Create, Store and Index Embedding Vectors](#create-store-and-index-embedding-vectors)  
         - [Perform a Semantic Search Query](#perform-a-semantic-search-query)  
-4. [Part 3 - Build the Agentic App](#part-3---build-the-agentic-app)  
+4. [Part 3 - Build the Agentic App](#part-3---build-the-agentic-app)
     1. [Open the Notebook](#open-the-notebook)  
     2. [For Notebook Step Part 3.3 - DB_CONFIG Username](#for-notebook-step-part-33---db_config-username)  
     3. [For Notebook Step Part 3.3 - Azure ML Settings](#for-notebook-step-part-33---azure-ml-settings)
@@ -35,7 +35,7 @@ Open Edge in the lab environment and login to Azure Portal with the following cr
     - Username: +++@lab.CloudPortalCredential(User1).Username+++
     - Password: +++@lab.CloudPortalCredential(User1).Password+++
 
-1. Once on the Azure Portal landing page, click "@lab.CloudResourceGroup(ResourceGroup1).Name"
+1. Once on the Azure Portal landing page, click on Resource Groups and check the "@lab.CloudResourceGroup(ResourceGroup1).Name" resource group.
 
 1. Observe the two Azure Resources, we will be using these during the course of this lab:
     - Azure OpenAI Instance
@@ -55,13 +55,13 @@ Open Edge in the lab environment and login to Azure Portal with the following cr
 
 	!IMAGE[vs-code-elephant.jpg](instructions291546/vs-code-elephant.jpg)
 
-1. Once the Extension Loads, click the "Add Connection" button in the "POSTGRESQL" panel
+1. Once the extension loads, click the "Add Connection" button in the "POSTGRESQL" panel
 
-	!IMAGE[vscode-add-conn.jpg](instructions291546/vscode-add-conn.jpg)	
+	!IMAGE[vscode-add-conn.jpg](instructions291546/vscode-add-conn.jpg)
 
 ===
 
-1. Enter a "Profile Name" such as "lab" for the Connection, and select "Browse Azure" option
+1. Enter a "Profile Name" such as "lab" for the Connection, and select the input type option "Browse Azure".
     1. This will prompt a popup to ask to login to Azure, click "Allow"
 
 	!IMAGE[vscode-add-conn-dialog.jpg](instructions291546/vscode-add-conn-dialog.jpg)
@@ -111,10 +111,10 @@ Open Edge in the lab environment and login to Azure Portal with the following cr
 1. Back on the "Connection Dialog", you should see your Lab account selected as the "Azure Account".
     1. Next, click "Test Connection" to ensure you are connected to the database
     2. Finally, click "Connect" to connect into the database
-	
+
     	!IMAGE[vscode-connect.jpg](instructions291546/vscode-connect.jpg)
 
-1. Congratulations, you just logged into your Azure PostgreSQL database using Entra ID using the VS Code Extension for PostgreSQL!
+1. Congratulations, you just logged into your Azure PostgreSQL database using Entra ID using the VS Code extension for PostgreSQL!
 
 ===
 
@@ -138,7 +138,7 @@ Open Edge in the lab environment and login to Azure Portal with the following cr
 
 ## Populate the Database with Sample Data
 
-Before you explore the <code spellcheck="false">azure_ai</code> extension, we will add a couple of tables to the <code spellcheck="false">cases</code> database and populate them with sample data so you have information to work with throughout this lab.
+We will add a couple of tables to the <code spellcheck="false">cases</code> database and populate them with sample data to have information to work with throughout this lab.
 
 1. At the PSQL Command Line Shell, run the following commands to create the <code spellcheck="false">cases</code> tables and data:
 
@@ -189,15 +189,15 @@ azure_ai,vector,age,pg_diskann
 
 ===
 
-### Explore the Azure AI schema and Setup `azure_ai` Extension
+### Explore the Azure AI schema and Setup `azure_ai` extension
 
 The <code spellcheck="false">azure_ai</code> schema provides the framework for directly interacting with Azure AI and ML services from your database. It contains functions for setting up connections to those services and retrieving them from the <code spellcheck="false">settings</code> table, which is also hosted in the same schema. The <code spellcheck="false">settings</code> table provides secure storage in the database for endpoints and keys associated with your Azure AI and ML services.
 
 1. Review the functions defined in the  <code spellcheck="false">azure_ai</code> schema.
-    1. You can review the full schema details in the [Microsoft documention](https://learn.microsoft.com/en-us/azure/postgresql/flexible-server/generative-ai-azure-overview#configure-the-azure_ai-extension)
+    1. You can review the full schema details in the [Microsoft Documentation](https://learn.microsoft.com/en-us/azure/postgresql/flexible-server/generative-ai-azure-overview#configure-the-azure_ai-extension)
 
 
-         Schema   |  Name       | Result data type | Argument data types  | Type 
+         Schema   |  Name       | Result data type | Argument data types  | Type
         ----------|-------------|-----------|-----------------------------|------
          azure_ai | get_setting | text      | key text                    | func
          azure_ai | set_setting | void      | key text, value text        | func
@@ -209,12 +209,12 @@ The <code spellcheck="false">azure_ai</code> schema provides the framework for d
     
     <br>
 
-2. To demonstrate how you use the <code spellcheck="false">azure_ai.set_setting()</code> and <code spellcheck="false">azure_ai.get_setting()</code> functions, configure the connection to your Azure OpenAI account:
+1. To demonstrate how you use the <code spellcheck="false">azure_ai.set_setting()</code> and <code spellcheck="false">azure_ai.get_setting()</code> functions, configure the connection to your Azure OpenAI account:
 
     1. To make getting the Azure OpenAI Endpoint and Key a little easier, we have a PowerShell script to grab them:
     1. Open "Terminal" by clicking the Terminal icon in the Task Menu
 		<br>!IMAGE[terminal-icon.jpg](instructions291546/terminal-icon.jpg)
-	1. Navigate to the path below using the following command: ` cd C:\users\labuser\downloads\pg-sk-agents-lab\scripts\`
+	1. Navigate to the path below using the following command: `cd C:\users\labuser\downloads\pg-sk-agents-lab\scripts\`
     1. Enter the following script name to run it: `.\get_env.ps1`
     1. Copy the values for `AZURE_OPENAI_ENDPOINT` and `AZURE_OPENAI_KEY`
 
@@ -228,24 +228,24 @@ The <code spellcheck="false">azure_ai</code> schema provides the framework for d
     * *SELECT azure_ai.set_setting('azure_openai.endpoint', 'https://oai-learn-eastus-123456.openai.azure.com/');*
     * *SELECT azure_ai.set_setting('azure_openai.subscription_key', 'd33a123456781');*
 
-4. You can verify the settings written into the <code spellcheck="false">azure_ai.settings</code> table using the <code spellcheck="false">azure_ai.get_setting()</code> function in the following queries:
+1. You can verify the settings written into the <code spellcheck="false">azure_ai.settings</code> table using the <code spellcheck="false">azure_ai.get_setting()</code> function in the following queries:
 
 	> +++SELECT azure_ai.get_setting('azure_openai.endpoint');+++
-    
-    > +++SELECT azure_ai.get_setting('azure_openai.subscription_key');+++    
 
-Congratulations, the <code spellcheck="false">azure_ai</code> PostgreSQL Extension is now connected to your Azure OpenAI account!
+    > +++SELECT azure_ai.get_setting('azure_openai.subscription_key');+++
+
+Congratulations, the <code spellcheck="false">azure_ai</code> PostgreSQL extension is now connected to your Azure OpenAI account!
 
 ===
 ### Review the Azure OpenAI schema
 
 The <code spellcheck="false">azure_openai</code> schema provides the ability to integrate the creation of vector embedding of text values into your database using Azure OpenAI. Using this schema, you can [generate embeddings with Azure OpenAI](https://learn.microsoft.com/azure/ai-services/openai/how-to/embeddings) directly from the database to create vector representations of input text, which can then be used in vector similarity searches, as well as consumed by machine learning models. The schema contains a single function, <code spellcheck="false">create_embeddings()</code>, with two overloads. One overload accepts a single input string, and the other expects an array of input strings.
 
-1. Review the details of the functions in the <code spellcheck="false">azure_openai</code> schema. 
+1. Review the details of the functions in the <code spellcheck="false">azure_openai</code> schema.
 
-    * Review in the [Microsoft documention](https://learn.microsoft.com/en-us/azure/postgresql/flexible-server/generative-ai-azure-openai#configure-openai-endpoint-and-key)
+    * Review in the [Microsoft Documentation](https://learn.microsoft.com/en-us/azure/postgresql/flexible-server/generative-ai-azure-openai#configure-openai-endpoint-and-key)
 
-    The docs will shows the two overloads of the <code spellcheck="false">azure_openai.create_embeddings()</code> function, allowing you to review the differences between the two versions of the function and the types they return. 
+    The docs will show the two overloads of the <code spellcheck="false">azure_openai.create_embeddings()</code> function, allowing you to review the differences between the two versions of the function and the types they return.
 
 2. To provide a simplified example of using the function, run the following query, which creates a vector embedding for a sample query. The <code spellcheck="false">deployment_name</code> parameter in the function is set to <code spellcheck="false">embedding</code>, which is the name of the deployment of the <code spellcheck="false">text-embedding-3-small</code> model in your Azure OpenAI service:
 
@@ -295,9 +295,9 @@ In this section, we will explore how to leverage AI-driven features within Postg
 
 >[!alert] For these next tasks, we will switch to using the **VS Code PostgreSQL Extension Query Editor**.  Follow the steps below to use that.
 
-## Open New Query Editor in VS Code PostgreSQL Extension
+## Open New Query Editor in VS Code PostgreSQL extension
 
-1. If not already there, click on the Elephant Icon on the left navigation to open the VS Code PostgreSQL Extension
+1. If not already there, click on the Elephant Icon on the left navigation to open the VS Code PostgreSQL extension
 
 	!IMAGE[vs-code-elephant.jpg](instructions291546/vs-code-elephant.jpg)
 
@@ -314,7 +314,7 @@ In this section, we will explore how to leverage AI-driven features within Postg
 
 1. Now let's run a test query in the editor window to see how it works.
     1. Enter the following SQL query below in the query editor
-    
+
     	> +++SELECT NAME FROM CASES LIMIT 5;+++
     
     1. Next click the green play ">" icon in the top right tool bar.  Notice the results open in PostgreSQL Query Results panel 
@@ -345,7 +345,7 @@ We will explore how to use the <code spellcheck="false">ILIKE</code> clause in S
     (0 rows)
     ```
 
-	However, it does not find any results because those *exact* words are not mentioned in the opinion. As you can see there are no results for what to user wants to find. We need to try another appoach.
+	However, it does not find any results because those *exact* words are not mentioned in the opinion. As you can see there are no results for what to user wants to find. We need to try another approach.
 
     Next we will see how we can improve on this using Semantic Vector Search.
 
@@ -364,11 +364,13 @@ Now that we have some sample data, it's time to generate and store the embedding
     ```sql
     CREATE EXTENSION IF NOT EXISTS vector;
     ```
+
 1. Add the embedding vector column. The <code spellcheck="false">text-embedding-3-small</code> model is configured to return 1,536 dimensions, so use that for the vector column size.
 
     ```sql
     ALTER TABLE cases ADD COLUMN opinions_vector vector(1536);
     ```
+
 1. Generate an embedding vector for the opinion of each case by calling Azure OpenAI through the create_embeddings user-defined function, which is implemented by the azure_ai extension:
 
     ```sql
@@ -391,7 +393,7 @@ Now that we have some sample data, it's time to generate and store the embedding
     ```sql
     CREATE INDEX cases_cosine_diskann ON cases USING diskann(opinions_vector vector_cosine_ops);
     ```
-    as you scale your data to millions of rows, DiskANN makes vector search more effcient.
+    as you scale your data to millions of rows, DiskANN makes vector search more efficient.
 
 1. See an example vector by running this query:
 
@@ -426,10 +428,8 @@ Now that you have listing data augmented with embedding vectors, it's time to ru
 2. Use the embedding in a cosine search (<code spellcheck="false"><=></code> represents cosine distance operation), fetching the top 10 most similar cases to the query.
 
     ```sql
-    SELECT 
-        id, name 
-    FROM 
-        cases
+    SELECT id, name
+    FROM cases
     ORDER BY opinions_vector <=> azure_openai.create_embeddings('text-embedding-3-small', 'Water leaking into the apartment from the floor above.')::vector 
     LIMIT 10;
     ```
@@ -455,8 +455,7 @@ Now that you have listing data augmented with embedding vectors, it's time to ru
 3. You may also project the <code spellcheck="false">opinion</code> column to be able to read the text of the matching rows whose opinions were semantically similar. For example, this query returns the best match:
 
     ```sql
-    SELECT 
-    id, opinion
+    SELECT id, opinion
     FROM cases
     ORDER BY opinions_vector <=> azure_openai.create_embeddings('text-embedding-3-small', 'Water leaking into the apartment from the floor above.')::vector 
     LIMIT 1;
